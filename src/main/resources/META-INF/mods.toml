@@ -1,0 +1,23 @@
+[[mods]]
+modId = "killupgrademod"
+version = "1.0"
+displayName = "Kill Upgrade Mod"
+credits = "msmalika9"
+authors = "msmalika9"
+description = '''
+A mod that upgrades a mace with each kill.
+'''
+
+[[dependencies.killupgrademod]]
+modId = "forge"
+mandatory = true
+versionRange = "[40,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.killupgrademod]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18.2,1.19)"
+ordering = "NONE"
+side = "BOTH"

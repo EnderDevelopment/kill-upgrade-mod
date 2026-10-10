@@ -1,0 +1,63 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'forge'
+        url = 'https://files.minecraftforge.net/maven'
+    }
+}
+
+ext.group = 'com.msmalika9'
+version = '1.0'
+
+sourceCompatibility = JavaVersion.VERSION_17
+
+extraProperties {
+    'forge_version' = '40.2.0'
+    'minecraft_version' = '1.18.2'
+}
+
+configurations {
+    forge
+}
+
+dependencies {
+    implementation fg.deobf('net.minecraftforge:forge:${extraProperties['forge_version']}-minecraft${extraProperties['minecraft_version']}')
+    implementation fg.deobf('net.minecraft:client:${extraProperties['minecraft_version']}-sources')
+    implementation fg.deobf('net.minecraft:server:${extraProperties['minecraft_version']}-sources')
+}
+
+processResources {
+    inputs.property 'version', project.version
+    inputs.property 'mcversion', extraProperties['minecraft_version']
+}
+
+jar {
+    archiveFileName = "killupgrademod-${version}.jar"
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.18.2'
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            args '--username', 'Player', '--version', 'mcp', '--assetsDir', 'assets', '--resourcePackDir', 'assets'
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.logging.markers', 'SCAN'
+            args '--nogui'
+        }
+        data {
+            workingDirectory project.file('run')
+            args '-server', '-p', '25565'
+        }
+    }
+}
